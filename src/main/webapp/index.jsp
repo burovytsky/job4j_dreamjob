@@ -30,35 +30,26 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Объявления</th>
+                <th scope="col">#</th>
+                <th scope="col">Level</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date created</th>
             </tr>
             </thead>
             <tbody>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Level</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date created</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (Post post : Store.instOf().findAll()) { %>
-                <tr>
-                    <td><%= post.getId() %>
-                    </td>
-                    <td><%= post.getName() %>
-                    </td>
-                    <td><%=post.getDescription()%>
-                    </td>
-                    <td><%=post.getCreated()%>
-                    </td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
+            <% for (Post post : Store.instOf().findAllPosts()) { %>
+            <tr>
+                <td><%= post.getId() %>
+                </td>
+                <td><%= post.getName() %>
+                </td>
+                <td><%=post.getDescription()%>
+                </td>
+                <td><%=post.getCreated()%>
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
         </table>
     </div>
 </div>

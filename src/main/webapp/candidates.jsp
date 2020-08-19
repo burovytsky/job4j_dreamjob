@@ -2,12 +2,12 @@
   Created by IntelliJ IDEA.
   User: cns
   Date: 19.08.2020
-  Time: 19:59
+  Time: 20:27
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.job4j.dreamjob.Store" %>
-<%@ page import="ru.job4j.dreamjob.model.Post" %>
+<%@ page import="ru.job4j.dreamjob.model.Candidate" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,25 +36,28 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Вакансии
+                Кандидаты
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Название</th>
-                        <th scope="col">Описание</th>
-                        <th scope="col">Добавлено</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Позиция</th>
+                        <th scope="col">Дата рождения</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.instOf().findAllPosts()) { %>
+                    <% for (Candidate candidate : Store.instOf().findAllCandidates()) { %>
                     <tr>
-                        <td><%= post.getName() %>
+                        <td><%= candidate.getName() %>
                         </td>
-                        <td><%= post.getDescription() %>
+                        <td><%= candidate.getAddress() %>
                         </td>
-                        <td><%= post.getCreated() %>
+                        <td><%= candidate.getPosition() %>
+                        </td>
+                        <td><%= candidate.getBirthday() %>
                         </td>
                     </tr>
                     <% } %>
