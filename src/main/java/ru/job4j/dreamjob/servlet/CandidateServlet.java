@@ -14,7 +14,8 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.instOf().save(new Candidate(req.getParameter("name"),
+        Store.instOf().save(new Candidate(Integer.parseInt(req.getParameter("id")),
+                req.getParameter("name"),
                 req.getParameter("address"),
                 req.getParameter("position"), LocalDateTime.now().minusMonths(200)));
         resp.sendRedirect(req.getContextPath() + "/candidate/candidates.jsp");

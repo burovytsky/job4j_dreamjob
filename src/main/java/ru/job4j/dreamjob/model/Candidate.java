@@ -4,16 +4,26 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Candidate {
+    private int id;
     private String name;
     private String address;
     private String position;
     private LocalDateTime birthday;
 
-    public Candidate(String name, String address, String position, LocalDateTime birthday) {
+    public Candidate(int id, String name, String address, String position, LocalDateTime birthday) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.position = position;
         this.birthday = birthday;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -53,7 +63,8 @@ public class Candidate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
-        return Objects.equals(name, candidate.name) &&
+        return candidate.getId() == ((Candidate) o).getId() &&
+                Objects.equals(name, candidate.name) &&
                 Objects.equals(address, candidate.address) &&
                 Objects.equals(position, candidate.position) &&
                 Objects.equals(birthday, candidate.birthday);
@@ -61,6 +72,6 @@ public class Candidate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address, position, birthday);
+        return Objects.hash(id, name, address, position, birthday);
     }
 }
