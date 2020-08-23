@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.Store" %>
+<%@ page import="ru.job4j.dreamjob.MemStore" %>
 <%@ page import="ru.job4j.dreamjob.model.Post" %>
 <%@ page import="java.time.LocalDateTime" %>
 <!doctype html>
@@ -36,7 +36,7 @@
     String id = request.getParameter("id");
     Post post = new Post(0, "", "", LocalDateTime.now());
     if (id != null) {
-        post = Store.instOf().findPostById(Integer.parseInt(id));
+        post = MemStore.instOf().findPostById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
