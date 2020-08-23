@@ -1,6 +1,6 @@
 package ru.job4j.dreamjob.servlet;
 
-import ru.job4j.dreamjob.MemStore;
+import ru.job4j.dreamjob.PsqlStore;
 import ru.job4j.dreamjob.model.Post;
 
 import javax.servlet.ServletException;
@@ -13,14 +13,14 @@ import java.time.LocalDateTime;
 public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", MemStore.instOf().findAllPosts());
+        req.setAttribute("posts", PsqlStore.instOf().findAllPosts());
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        MemStore.instOf().save(new Post(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
+        PsqlStore.instOf().save(new Post(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
                 req.getParameter("description"),
                 LocalDateTime.now()));
         resp.sendRedirect(req.getContextPath() + "/post/posts.do");

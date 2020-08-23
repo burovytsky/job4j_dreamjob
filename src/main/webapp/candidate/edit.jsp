@@ -6,9 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.MemStore" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
+<%@ page import="ru.job4j.dreamjob.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +36,7 @@
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0, "", "", "", LocalDateTime.now());
     if (id != null) {
-        candidate = MemStore.instOf().findCandidateById(Integer.parseInt(id));
+        candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
