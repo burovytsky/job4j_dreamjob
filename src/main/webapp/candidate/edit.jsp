@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
-<%@ page import="ru.job4j.dreamjob.PsqlStore" %>
+<%@ page import="ru.job4j.dreamjob.store.PsqlStore" %>
 <%@ page import="ru.job4j.dreamjob.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>

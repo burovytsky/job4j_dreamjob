@@ -1,6 +1,6 @@
 package ru.job4j.dreamjob.servlet;
 
-import ru.job4j.dreamjob.PsqlStore;
+import ru.job4j.dreamjob.store.PsqlStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

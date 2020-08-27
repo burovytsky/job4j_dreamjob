@@ -1,4 +1,4 @@
-package ru.job4j.dreamjob;
+package ru.job4j.dreamjob.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.dreamjob.model.Candidate;

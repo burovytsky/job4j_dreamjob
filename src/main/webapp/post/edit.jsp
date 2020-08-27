@@ -10,7 +10,7 @@
 <%@ page import="ru.job4j.dreamjob.model.Post" %>
 <%@ page import="ru.job4j.dreamjob.model.User" %>
 <%@ page import="java.time.LocalDateTime" %>
-<%@ page import="ru.job4j.dreamjob.PsqlStore" %>
+<%@ page import="ru.job4j.dreamjob.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
