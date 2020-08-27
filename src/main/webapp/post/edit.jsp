@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: cns
@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="ru.job4j.dreamjob.model.Post" %>
-<%@ page import="ru.job4j.dreamjob.model.User" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dreamjob.store.PsqlStore" %>
 <!doctype html>
@@ -57,8 +56,7 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                    <%= ((User) request.getSession().getAttribute("user")).getName()%> |
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> |
                     Выйти</a>
             </li>
         </ul>

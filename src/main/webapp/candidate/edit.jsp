@@ -9,7 +9,6 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
 <%@ page import="ru.job4j.dreamjob.store.PsqlStore" %>
-<%@ page import="ru.job4j.dreamjob.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -58,8 +57,7 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                    <%= ((User) request.getSession().getAttribute("user")).getName()%> |
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> |
                     Выйти</a>
             </li>
         </ul>
