@@ -10,18 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AuthServlet extends HttpServlet {
+public class RegServlet extends HttpServlet {
+
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setCharacterEncoding("UTF-8");
+        String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        User user = PsqlStore.instOf().findUserByEmail(email);
-        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+        if (PsqlStore.instOf().findUserByEmail(email) == null) {
             HttpSession sc = req.getSession();
-            sc.setAttribute("user", user);
+            User user = new User(0, name, email, password);
+            PsqlStore.instOf().save(user);
+            sc.setAttribute("user", PsqlStore.instOf().findUserByEmail(email));
             resp.sendRedirect(req.getContextPath() + "/post/posts.do");
         } else {
-            req.setAttribute("error", "Неверный email или пароль");
+            req.setAttribute("error", "Пользователь уже существует");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
     }

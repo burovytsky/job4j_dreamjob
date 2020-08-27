@@ -1,14 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: cns
   Date: 27.08.2020
-  Time: 14:41
+  Time: 21:49
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.model.Candidate" %>
-<%@ page import="ru.job4j.dreamjob.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,17 +35,15 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
-            </div>
-            <div class="card-header">
-                <a href="<c:url value='/registration/reg.jsp'/>">Регистрация</a>
+                Регистрация
             </div>
             <div class="card-body">
             </div>
-            <div>
-                <%=request.getAttribute("error") == null ? "" : request.getAttribute("error")%>
-            </div>
-            <form action="<%=request.getContextPath()%>/auth.do" method="post">
+            <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
                 <div class="form-group">
                     <label>Почта</label>
                     <input type="text" class="form-control" name="email">
@@ -56,7 +52,7 @@
                     <label>Пароль</label>
                     <input type="text" class="form-control" name="password">
                 </div>
-                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="submit" class="btn btn-primary">Регистрация</button>
             </form>
         </div>
     </div>
