@@ -47,6 +47,10 @@ public class CandidateServlet extends HttpServlet {
                 if (!item.isFormField()) {
                     file = new File(folder + File.separator + item.getName());
                     if (!item.getContentType().equals("application/octet-stream")) {
+                        if (!candidate.getPhotoId().isEmpty()) {
+                            File deleteFile = new File(folder + File.separator + candidate.getPhotoId());
+                            deleteFile.delete();
+                        }
                         candidate.setPhotoId(item.getName());
                         try (FileOutputStream out = new FileOutputStream(file)) {
                             out.write(item.getInputStream().readAllBytes());

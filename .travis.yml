@@ -4,11 +4,6 @@ jdk:
 
 sudo: false
 
-services:
-  - postgresql
-
-before_script:
-  - psql -c'CREATE DATABASE dreamjob;' -U postgres
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
