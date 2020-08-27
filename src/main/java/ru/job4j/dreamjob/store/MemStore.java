@@ -2,6 +2,7 @@ package ru.job4j.dreamjob.store;
 
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.Post;
+import ru.job4j.dreamjob.model.User;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -14,14 +15,19 @@ public class MemStore implements Store {
 
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final Map<Integer, User> users = new ConcurrentHashMap<>();
     private static final AtomicInteger POST_ID = new AtomicInteger(4);
     private static final AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
+    private static final AtomicInteger USER_ID = new AtomicInteger(4);
 
 
     private MemStore() {
         posts.put(1, new Post(1, "Junior Java Job", "Description Junior Java Job", LocalDateTime.now()));
         posts.put(2, new Post(2, "Middle Java Job", "Descriptiom Middle Java Job", LocalDateTime.now()));
         posts.put(3, new Post(3, "Senior Java Job", "Description Senior Job", LocalDateTime.now()));
+        users.put(1, new User(1, "User1", "user1@gmail.com", "user1password"));
+        users.put(2, new User(2, "User2", "user1@gmail.com", "user2password"));
+        users.put(3, new User(3, "User3", "user2@gmail.com", "user3password"));
         candidates.put(1, new Candidate(1, "Ivan Ivanov",
                 "Ukraine, Odessa",
                 "Junior Java Developer",
@@ -56,8 +62,25 @@ public class MemStore implements Store {
     }
 
     @Override
+    public User findUserByEmail(String email) {
+        User user = null;
+        for (Map.Entry<Integer, User> userEntry : users.entrySet()) {
+            if (userEntry.getValue().getEmail().equals(email)) {
+                user = userEntry.getValue();
+                break;
+            }
+        }
+        return user;
+    }
+
+    @Override
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
+    }
+
+    @Override
+    public Collection<User> findAllUsers() {
+        return users.values();
     }
 
     @Override
@@ -74,6 +97,14 @@ public class MemStore implements Store {
             candidate.setId(CANDIDATE_ID.incrementAndGet());
         }
         candidates.put(candidate.getId(), candidate);
+    }
+
+    @Override
+    public void save(User user) {
+        if (user.getId() == 0) {
+            user.setId(USER_ID.incrementAndGet());
+        }
+        users.put(user.getId(), user);
     }
 
     @Override
