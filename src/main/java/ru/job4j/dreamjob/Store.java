@@ -14,6 +14,8 @@ public interface Store {
 
     void save(Candidate candidate);
 
+    void delete(int id);
+
     Post findPostById(int id);
 
     Candidate findCandidateById(int id);

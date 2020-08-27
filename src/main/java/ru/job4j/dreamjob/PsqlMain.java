@@ -10,8 +10,8 @@ public class PsqlMain {
         Store store = PsqlStore.instOf();
         store.save(new Post(0, "Java Job", "desc1", LocalDateTime.now()));
         store.save(new Post(0, "Job 2222", "desc2", LocalDateTime.now()));
-        store.save(new Candidate(0, "Ivan", "address1", "pos1", LocalDateTime.now()));
-        store.save(new Candidate(0, "Daniel ", "address2", "pos2", LocalDateTime.now()));
+        store.save(new Candidate(0, "Ivan", "address1", "pos1", LocalDateTime.now(), ""));
+        store.save(new Candidate(0, "Daniel ", "address2", "pos2", LocalDateTime.now(), ""));
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName() + " " + post.getDescription());
         }

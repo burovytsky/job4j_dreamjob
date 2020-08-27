@@ -9,13 +9,15 @@ public class Candidate {
     private String address;
     private String position;
     private LocalDateTime birthday;
+    private String photoId;
 
-    public Candidate(int id, String name, String address, String position, LocalDateTime birthday) {
+    public Candidate(int id, String name, String address, String position, LocalDateTime birthday, String photoId) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.position = position;
         this.birthday = birthday;
+        this.photoId = photoId;
     }
 
     public int getId() {
@@ -56,6 +58,14 @@ public class Candidate {
 
     public void setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
     }
 
     @Override

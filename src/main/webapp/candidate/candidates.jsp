@@ -44,7 +44,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<c:url value="/candidate/edit.jsp"/>">Добавить кандидата</a>
             </li>
         </ul>
     </div>
@@ -57,19 +57,27 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col">Удал./Изм.</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Адрес</th>
                         <th scope="col">Позиция</th>
                         <th scope="col">Дата рождения</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate">
                         <tr>
                             <td>
+                                <a href='<c:url value="/delete?id=${candidate.id}"/>'>
+                                    <i class="fa fa-remove mr-3 ml-3"></i>
+                                </a>
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+
+                            </td>
+                            <td>
                                 <c:out value="${candidate.name}"/>
                             </td>
                             <td><c:out value="${candidate.address}"/>
@@ -77,6 +85,11 @@
                             <td><c:out value="${candidate.position}"/>
                             </td>
                             <td><c:out value="${candidate.birthday}"/>
+                            </td>
+                            <td>
+                                <img src="<c:url value='/download?name=${candidate.photoId}'/>" width="60px"
+                                     height="60px" alt="Нет фото"/>
+                                <a href="<c:url value='/download?name=${candidate.photoId}'/>">Download</a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -80,7 +80,8 @@ public class PsqlStore implements Store {
                     candidates.add(new Candidate(it.getInt("id"), it.getString("name"),
                             it.getString("address"),
                             it.getString("candidate_position"),
-                            it.getTimestamp("birthday").toLocalDateTime()));
+                            it.getTimestamp("birthday").toLocalDateTime(),
+                            it.getString("photoId")));
                 }
             }
         } catch (Exception e) {
@@ -142,16 +143,29 @@ public class PsqlStore implements Store {
         }
     }
 
+    @Override
+    public void delete(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM candidate WHERE id = (?)")
+        ) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, address, candidate_position, birthday) "
-                             + "VALUES (?, ?, ?, ?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, address, candidate_position, birthday, photoId) "
+                             + "VALUES (?, ?, ?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
             ps.setString(2, candidate.getAddress());
             ps.setString(3, candidate.getPosition());
             ps.setTimestamp(4, Timestamp.valueOf(candidate.getBirthday()));
+            ps.setString(5, candidate.getPhotoId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -167,13 +181,14 @@ public class PsqlStore implements Store {
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = (?), address = (?), "
-                     + "candidate_position = (?), birthday = (?) WHERE id = (?)")
+                     + "candidate_position = (?), birthday = (?), photoId = (?) WHERE id = (?)")
         ) {
             ps.setString(1, candidate.getName());
             ps.setString(2, candidate.getAddress());
             ps.setString(3, candidate.getPosition());
             ps.setTimestamp(4, Timestamp.valueOf(candidate.getBirthday()));
-            ps.setInt(5, candidate.getId());
+            ps.setString(5, candidate.getPhotoId());
+            ps.setInt(6, candidate.getId());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -193,7 +208,8 @@ public class PsqlStore implements Store {
                     candidate = new Candidate(it.getInt("id"), it.getString("name"),
                             it.getString("address"),
                             it.getString("candidate_position"),
-                            it.getTimestamp("birthday").toLocalDateTime());
+                            it.getTimestamp("birthday").toLocalDateTime(),
+                            it.getString("photoId"));
                 }
             }
         } catch (Exception e) {

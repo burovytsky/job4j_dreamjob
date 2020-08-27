@@ -9,6 +9,7 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
 <%@ page import="ru.job4j.dreamjob.PsqlStore" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,7 +35,7 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", "", "", LocalDateTime.now());
+    Candidate candidate = new Candidate(0, "", "", "", LocalDateTime.now(), "");
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
@@ -66,7 +67,8 @@
                 Редактирование данных кандидата.
                 <% } %></div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidate/candidates.do?id=<%=candidate.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/candidate/candidates.do?id=<%=candidate.getId()%>"
+                      method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
@@ -74,8 +76,19 @@
                         <input type="text" class="form-control" name="position" value="<%=candidate.getPosition()%>">
                         <label>Адрес</label>
                         <input type="text" class="form-control" name="address" value="<%=candidate.getAddress()%>">
+                        <label>Фото</label>
+                        <% if (id != null) { %>
+                        <img class="m-3" src="<%=request.getContextPath()%>/download?name=<%=candidate.getPhotoId()%>"
+                             width="100px"
+                             height="100px" alt="Нет фото"/>
+                        <% } %>
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div>
+                        <div class="checkbox mb-4">
+                            <input type="file" name="file">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
                 </form>
             </div>
         </div>
