@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS candidate (
 CREATE TABLE IF NOT EXISTS dream_user (
    id SERIAL PRIMARY KEY,
    name TEXT,
-   email TEXT,
+   email TEXT UNIQUE ,
    user_password TEXT
 );
