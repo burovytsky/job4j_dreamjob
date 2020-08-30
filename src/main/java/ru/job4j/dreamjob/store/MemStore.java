@@ -1,5 +1,7 @@
 package ru.job4j.dreamjob.store;
 
+import org.postgresql.util.PSQLException;
+import org.postgresql.util.ServerErrorMessage;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
@@ -22,24 +24,9 @@ public class MemStore implements Store {
 
 
     private MemStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "Description Junior Java Job", LocalDateTime.now()));
-        posts.put(2, new Post(2, "Middle Java Job", "Descriptiom Middle Java Job", LocalDateTime.now()));
-        posts.put(3, new Post(3, "Senior Java Job", "Description Senior Job", LocalDateTime.now()));
         users.put(1, new User(1, "User1", "user1@gmail.com", "user1password"));
-        users.put(2, new User(2, "User2", "user1@gmail.com", "user2password"));
+        users.put(2, new User(2, "User2", "user2@gmail.com", "user2password"));
         users.put(3, new User(3, "User3", "user2@gmail.com", "user3password"));
-        candidates.put(1, new Candidate(1, "Ivan Ivanov",
-                "Ukraine, Odessa",
-                "Junior Java Developer",
-                LocalDateTime.of(1995, 4, 29, 19, 30, 40), ""));
-        candidates.put(2, new Candidate(2, "Petr Petrov",
-                "Russia, Moscow",
-                "Middle Java Developer",
-                LocalDateTime.of(1990, 11, 12, 2, 30, 40), ""));
-        candidates.put(3, new Candidate(3, "Vasilii Vasin",
-                "Ukraine, Kyiv",
-                "Trainee Java Developer",
-                LocalDateTime.of(1999, 1, 1, 3, 30, 40), ""));
     }
 
     public static MemStore instOf() {
@@ -100,11 +87,15 @@ public class MemStore implements Store {
     }
 
     @Override
-    public void save(User user) {
-        if (user.getId() == 0) {
-            user.setId(USER_ID.incrementAndGet());
+    public void save(User user) throws PSQLException {
+        if (findUserByEmail(user.getEmail()) != null) {
+            throw new PSQLException(new ServerErrorMessage("User already exist"));
+        } else {
+            if (user.getId() == 0) {
+                user.setId(USER_ID.incrementAndGet());
+            }
+            users.put(user.getId(), user);
         }
-        users.put(user.getId(), user);
     }
 
     @Override
