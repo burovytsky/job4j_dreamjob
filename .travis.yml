@@ -4,7 +4,7 @@ jdk:
 
 sudo: false
 
-dist: trusty
+dist: xenial
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
