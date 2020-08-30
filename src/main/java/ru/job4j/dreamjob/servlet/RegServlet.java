@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.servlet;
 
+import org.postgresql.util.PSQLException;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.store.PsqlStore;
 
@@ -14,19 +15,16 @@ public class RegServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setCharacterEncoding("UTF-8");
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        if (PsqlStore.instOf().findUserByEmail(email) == null) {
-            HttpSession sc = req.getSession();
-            User user = new User(0, name, email, password);
+        User user = new User(0, req.getParameter("name"),
+                req.getParameter("email"), req.getParameter("password"));
+        try {
             PsqlStore.instOf().save(user);
-            sc.setAttribute("user", PsqlStore.instOf().findUserByEmail(email));
-            resp.sendRedirect(req.getContextPath() + "/post/posts.do");
-        } else {
+        } catch (PSQLException psqlException) {
             req.setAttribute("error", "Пользователь уже существует");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
+        HttpSession sc = req.getSession();
+        sc.setAttribute("user", PsqlStore.instOf().findUserByEmail(req.getParameter("email")));
+        resp.sendRedirect(req.getContextPath() + "/post/posts.do");
     }
 }

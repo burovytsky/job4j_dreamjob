@@ -1,6 +1,8 @@
 package ru.job4j.dreamjob.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.postgresql.util.PSQLException;
+import org.postgresql.util.ServerErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dreamjob.model.Candidate;
@@ -167,7 +169,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void save(User user) {
+    public void save(User user) throws PSQLException {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO dream_user"
                      + "(name, email, user_password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
@@ -183,6 +185,7 @@ public class PsqlStore implements Store {
             }
         } catch (Exception e) {
             LOG.error("Exception in save(User)", e);
+            throw new PSQLException(new ServerErrorMessage(e.getMessage()));
         }
     }
 
