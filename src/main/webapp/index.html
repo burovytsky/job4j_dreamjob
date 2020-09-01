@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            let name = $('#name').val();
+            let surname = $('#surname').val();
+            let description = $('#description').val();
+            switch ('') {
+                case name:
+                    alert('You need to fill in the field name');
+                    break;
+                case surname:
+                    alert('You need to fill in the field surname');
+                    break;
+                case description:
+                    alert('You need to fill in the field description');
+                    break;
+            }
+                }
+    </script>
 </head>
 <body>
 
@@ -46,7 +64,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" onclick="validate();">Submit</button>
             </div>
         </div>
     </form>
