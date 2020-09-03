@@ -14,10 +14,10 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/dreamjob/greet',
-            data: 'name=' + $('#exampleInputEmail1').val(),
-            dataType: 'text'
-        }).done(function () {
-            $('.container').prepend($('#exampleInputEmail1').val());
+            data: {name: $('#exampleInputEmail1').val()},
+            dataType: 'json'
+        }).done(function (data) {
+            $('.container').prepend(JSON.stringify(data));
         }).fail(function (err) {
             alert(err);
         });
