@@ -1,26 +1,15 @@
 [![Build Status](https://travis-ci.org/burovytsky/job4j_dreamjob.svg?branch=master)](https://travis-ci.org/burovytsky/job4j_dreamjob)
 [![codecov](https://codecov.io/gh/burovytsky/job4j_dreamjob/branch/master/graph/badge.svg)](https://codecov.io/gh/burovytsky/job4j_dreamjob)
 
-## Проект "Работа мечты"
-Web-приложение учета вакансий и кандидатов. Разработано в процессе изучения сервлетов java с использованием шаблона MVC.
+## Project "DreamJob"
 
-- В качестве хранилища используется база данных **PostgreSQL**
-- Сборщик проекта - **Maven**
-- Модульное тестирование сервлетов **Mockito**
-- Отображение страниц - **JSP, Servlets**
-- В JSP используется библиотека тегов **JSTL**
-- и готовые HTML шаблоны **BootStrap4**.
-- Протокол **HTTP**
-- Обмен данными происходит с помощью технологии **AJAX**
-- Валидация полей выполнена при помощи **JavaScript**
-
-В приложении реализована регистрация и аутентификации пользователя. Добавление, редактирование и удаление вакансий и кандидатов.
-
-На странице **Кандидаты** отображается список кандидатов с данными (имя, позиция, фото).
-Доступны кнопки Редактирования и Удаления кандидата.
-
-На странице **Вакансии** отображается список вакансий с данными (название, описание, дата добавления).
-Доступна кнопка Редактирования вакансии.
-
-На странице **Вход** можно выполнить вход в приложение либо перейти в форму регистрации нового пользователя.
+In that project has realized example of simple web application about job.
+Used technologies:
+- Apache Tomcat
+- PostgresSQL
+- Liquibase library for DB
+- JS,AJAX,JSP (front)
+- Logging system Slf4j with log4j
+- Mockito with PowerMock for test cases
+- Maven as a build system
 
