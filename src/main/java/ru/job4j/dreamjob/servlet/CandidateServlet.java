@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import ru.job4j.dreamjob.store.PsqlStore;
 import ru.job4j.dreamjob.model.Candidate;
 
@@ -23,6 +24,7 @@ public class CandidateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
         req.setAttribute("user",  req.getSession().getAttribute("user"));
+        req.setAttribute("cities",  PsqlStore.instOf().findAllCities());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 
@@ -35,7 +37,7 @@ public class CandidateServlet extends HttpServlet {
         factory.setRepository(repository);
         ServletFileUpload upload = new ServletFileUpload(factory);
         Candidate candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(req.getParameter("id")))
-                == null ? new Candidate(0, "", "", "", LocalDateTime.now(), "")
+                == null ? new Candidate(0, "", "", "", LocalDateTime.now(), "", 0)
                 : PsqlStore.instOf().findCandidateById(Integer.parseInt(req.getParameter("id")));
         File file;
         try {
@@ -64,6 +66,7 @@ public class CandidateServlet extends HttpServlet {
                         case "name" -> candidate.setName(fieldValue);
                         case "address" -> candidate.setAddress(fieldValue);
                         case "position" -> candidate.setPosition(fieldValue);
+                        case  "city" -> candidate.setCityId(Integer.parseInt(fieldValue));
                     }
                 }
             }

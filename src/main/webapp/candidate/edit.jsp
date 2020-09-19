@@ -29,13 +29,47 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        function validate() {
+            let name = $('#name').val();
+            let pos = $('#position').val();
+            let ad = $('#address').val();
+            switch ('') {
+                case name:
+                    alert('You need to fill in the field name');
+                    break;
+                case pos:
+                    alert('You need to fill in the field position');
+                    break;
+                case ad:
+                    alert('You need to fill in the field address');
+                    break;
+            }
+            return name !== '' && pos !== '' && ad !== '';
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/job4j_dreamjob/city',
+                dataType: 'json'
+            }).done(function (data) {
+                $.each(data, function (index, value) {
+                    $('#city').append('<option value="' + index + '">' + value + '</option>')
+                });
+            }).fail(function (err) {
+                alert(err);
+            });
+        });
+    </script>
 
     <title>Работа мечты</title>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", "", "", LocalDateTime.now(), "");
+    Candidate candidate = new Candidate(0, "", "", "", LocalDateTime.now(), "", 0);
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
@@ -75,11 +109,15 @@
                       method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name" id="name" value="<%=candidate.getName()%>">
                         <label>Позиция</label>
-                        <input type="text" class="form-control" name="position" value="<%=candidate.getPosition()%>">
+                        <input type="text" class="form-control" name="position" id="position"
+                               value="<%=candidate.getPosition()%>">
                         <label>Адрес</label>
-                        <input type="text" class="form-control" name="address" value="<%=candidate.getAddress()%>">
+                        <input type="text" class="form-control" name="address" id="address"
+                               value="<%=candidate.getAddress()%>">
+                        <label>Город</label>
+                        <select class="form-control" id="city" name="city"></select>
                         <label>Фото</label>
                         <% if (id != null) { %>
                         <img class="m-3" src="<%=request.getContextPath()%>/download?name=<%=candidate.getPhotoId()%>"
@@ -91,7 +129,7 @@
                         <div class="checkbox mb-4">
                             <input type="file" name="file">
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                     </div>
                 </form>
             </div>

@@ -29,6 +29,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script>
+        function validate() {
+            let name = $('#name').val();
+            let description = $('#description').val();
+            if (name === '' || description === '') {
+                    alert('You need to fill all fields');
+            }
+            return name !== '' && description !== '';
+        }
+    </script>
 
     <title>Работа мечты</title>
 </head>
@@ -74,11 +84,12 @@
                 <form action="<%=request.getContextPath()%>/post/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <input type="text" class="form-control" name="name" id="name" value="<%=post.getName()%>">
                         <label>Описание вакансии</label>
-                        <input type="text" class="form-control" name="description" value="<%=post.getDescription()%>">
+                        <input type="text" class="form-control" name="description" id="description"
+                               value="<%=post.getDescription()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

@@ -2,10 +2,10 @@ package ru.job4j.dreamjob.store;
 
 import org.postgresql.util.PSQLException;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 public interface Store {
@@ -14,6 +14,8 @@ public interface Store {
     Collection<Candidate> findAllCandidates();
 
     Collection<User> findAllUsers();
+
+    Collection<City> findAllCities();
 
     void save(Post post);
 

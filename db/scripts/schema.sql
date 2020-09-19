@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS candidate (
    name TEXT,
    address TEXT,
    candidate_position TEXT,
-   birthday TIMESTAMP
+   birthday TIMESTAMP,
+   photoId TEXT,
+   cityId integer
 );
 
 CREATE TABLE IF NOT EXISTS dream_user (
@@ -18,4 +20,9 @@ CREATE TABLE IF NOT EXISTS dream_user (
    name TEXT,
    email TEXT UNIQUE ,
    user_password TEXT
+);
+
+CREATE TABLE IF NOT EXISTS city (
+   id SERIAL PRIMARY KEY,
+   name TEXT
 );

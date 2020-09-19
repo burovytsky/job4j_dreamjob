@@ -63,6 +63,7 @@
                         <th scope="col">Удал./Изм.</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Адрес</th>
+                        <th scope="col">Город</th>
                         <th scope="col">Позиция</th>
                         <th scope="col">Дата рождения</th>
                         <th scope="col">Фото</th>
@@ -84,6 +85,15 @@
                                 <c:out value="${candidate.name}"/>
                             </td>
                             <td><c:out value="${candidate.address}"/>
+                            </td>
+                            <td>
+                                <label>
+                                    <c:forEach items="${cities}" var="city">
+                                        <c:if test="${candidate.cityId == city.id}">
+                                            <c:out value="${city.name}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                </label>
                             </td>
                             <td><c:out value="${candidate.position}"/>
                             </td>

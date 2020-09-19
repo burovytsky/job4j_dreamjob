@@ -3,10 +3,10 @@ package ru.job4j.dreamjob.store;
 import org.postgresql.util.PSQLException;
 import org.postgresql.util.ServerErrorMessage;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,6 +18,7 @@ public class MemStore implements Store {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private final Map<Integer, City> cities = new ConcurrentHashMap<>();
     private static final AtomicInteger POST_ID = new AtomicInteger(4);
     private static final AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
     private static final AtomicInteger USER_ID = new AtomicInteger(4);
@@ -68,6 +69,11 @@ public class MemStore implements Store {
     @Override
     public Collection<User> findAllUsers() {
         return users.values();
+    }
+
+    @Override
+    public Collection<City> findAllCities() {
+        return cities.values();
     }
 
     @Override

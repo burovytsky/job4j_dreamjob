@@ -10,14 +10,25 @@ public class Candidate {
     private String position;
     private LocalDateTime birthday;
     private String photoId;
+    private int cityId;
 
-    public Candidate(int id, String name, String address, String position, LocalDateTime birthday, String photoId) {
+    public Candidate(int id, String name, String address, String position,
+                     LocalDateTime birthday, String photoId, int cityId) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.position = position;
         this.birthday = birthday;
         this.photoId = photoId;
+        this.cityId = cityId;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public int getId() {

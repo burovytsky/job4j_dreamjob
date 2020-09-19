@@ -6,6 +6,7 @@ import org.postgresql.util.ServerErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
 
@@ -87,7 +88,8 @@ public class PsqlStore implements Store {
                             it.getString("address"),
                             it.getString("candidate_position"),
                             it.getTimestamp("birthday").toLocalDateTime(),
-                            it.getString("photoId")));
+                            it.getString("photoId"),
+                            it.getInt("cityId")));
                 }
             }
         } catch (Exception e) {
@@ -116,6 +118,23 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public Collection<City> findAllCities() {
+        List<City> cities = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    cities.add(new City(it.getInt("id"), it.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in findAllCities()", e);
+        }
+        return cities;
+    }
+
+    @Override
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post);
@@ -126,7 +145,8 @@ public class PsqlStore implements Store {
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name, description, created) VALUES (?, ?, ?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name, description, created) " +
+                             "VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
@@ -203,8 +223,9 @@ public class PsqlStore implements Store {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, address, candidate_position, birthday, photoId) "
-                             + "VALUES (?, ?, ?, ?, ?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate" +
+                             "(name, address, candidate_position, birthday, photoId, cityId) " +
+                             "VALUES (?, ?, ?, ?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
@@ -212,6 +233,7 @@ public class PsqlStore implements Store {
             ps.setString(3, candidate.getPosition());
             ps.setTimestamp(4, Timestamp.valueOf(candidate.getBirthday()));
             ps.setString(5, candidate.getPhotoId());
+            ps.setInt(6, candidate.getCityId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -227,7 +249,7 @@ public class PsqlStore implements Store {
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = (?), address = (?), "
-                     + "candidate_position = (?), birthday = (?), photoId = (?) WHERE id = (?)")
+                     + "candidate_position = (?), birthday = (?), photoId = (?), cityId = (?) WHERE id = (?)")
         ) {
             ps.setString(1, candidate.getName());
             ps.setString(2, candidate.getAddress());
@@ -235,6 +257,7 @@ public class PsqlStore implements Store {
             ps.setTimestamp(4, Timestamp.valueOf(candidate.getBirthday()));
             ps.setString(5, candidate.getPhotoId());
             ps.setInt(6, candidate.getId());
+            ps.setInt(7, candidate.getCityId());
             ps.execute();
         } catch (Exception e) {
             LOG.error("Exception in update(Candidate)", e);
@@ -255,7 +278,8 @@ public class PsqlStore implements Store {
                             it.getString("address"),
                             it.getString("candidate_position"),
                             it.getTimestamp("birthday").toLocalDateTime(),
-                            it.getString("photoId"));
+                            it.getString("photoId"),
+                            it.getInt("cityId"));
                 }
             }
         } catch (Exception e) {
