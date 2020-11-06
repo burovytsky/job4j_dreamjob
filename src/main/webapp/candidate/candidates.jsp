@@ -65,7 +65,6 @@
                         <th scope="col">Адрес</th>
                         <th scope="col">Город</th>
                         <th scope="col">Позиция</th>
-                        <th scope="col">Дата рождения</th>
                         <th scope="col">Фото</th>
                     </tr>
                     </thead>
@@ -96,8 +95,6 @@
                                 </label>
                             </td>
                             <td><c:out value="${candidate.position}"/>
-                            </td>
-                            <td><c:out value="${candidate.birthday}"/>
                             </td>
                             <td>
                                 <img src="<c:url value='/download?name=${candidate.photoId}'/>" width="60px"
