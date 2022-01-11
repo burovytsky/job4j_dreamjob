@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/burovytsky/job4j_dreamjob.svg?branch=master)](https://travis-ci.org/burovytsky/job4j_dreamjob)
 [![codecov](https://codecov.io/gh/burovytsky/job4j_dreamjob/branch/master/graph/badge.svg)](https://codecov.io/gh/burovytsky/job4j_dreamjob)
 
+
 ## Project "DreamJob"
 
 This project has implemented an example of a simple web application for working with vacancies and candidates.
