@@ -6,7 +6,7 @@
 
 This project has implemented an example of a simple web application for working with vacancies and candidates.
 
-Used technologies:
+Used technologies :
 - Apache Tomcat
 - PostgresSQL
 - Liquibase library for DB
