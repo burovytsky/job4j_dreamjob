@@ -14,7 +14,6 @@ Used technologies:
 - Mockito with PowerMock for test cases
 - Maven as a build system
 
-
 Login page - the application implements registration and authentication of 
 application users. All pages can only be viewed by authorized users:
 
